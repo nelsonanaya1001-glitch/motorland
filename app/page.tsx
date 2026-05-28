@@ -56,11 +56,11 @@ export default async function HomePage() {
             alt="Motorland Miami hero"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/55" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/10" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
-          <div className="max-w-xl">
+          <div className="max-w-[45%] sm:max-w-sm lg:max-w-md">
             <p className="text-red-400 font-semibold text-sm uppercase tracking-widest mb-3">
               Auto Parts &amp; Accessories
             </p>
