@@ -4,8 +4,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Motorland — Auto Parts & Accessories",
-  description: "Quality auto parts, accessories, and more. Thousands of items ready to ship.",
+  title: "Motorland Miami — Auto Parts & Accessories",
+  description: "Quality OEM and aftermarket auto parts for every make and model. Founded in Miami 2020. 5,000+ parts in stock.",
 };
 
 export default function RootLayout({

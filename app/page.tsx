@@ -1,97 +1,136 @@
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, Truck, RefreshCw, Headphones, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, CheckCircle2, Layers, DollarSign } from "lucide-react";
 import { searchEbayItems } from "@/lib/ebay";
 
-const CATEGORIES = [
-  { name: "Engine Parts", slug: "engine", icon: "🔧", desc: "Filters, gaskets, timing, belts" },
-  { name: "Brakes", slug: "brakes", icon: "⚙️", desc: "Pads, rotors, calipers, lines" },
-  { name: "Suspension", slug: "suspension", icon: "🚗", desc: "Shocks, struts, control arms" },
-  { name: "Electrical", slug: "electrical", icon: "⚡", desc: "Batteries, alternators, starters" },
-  { name: "Exterior", slug: "exterior", icon: "🎨", desc: "Mirrors, lights, bumpers, trim" },
-  { name: "Wheels & Tires", slug: "wheels-tires", icon: "🛞", desc: "Rims, tires, lug nuts, caps" },
-  { name: "Interior", slug: "interior", icon: "🪑", desc: "Seats, dash, mats, trim pieces" },
-  { name: "Fluids & Oils", slug: "fluids-oils", icon: "🛢️", desc: "Motor oil, coolant, brake fluid" },
+const BRANDS = [
+  { name: "BMW", img: "https://motorlandmia.com/cdn/shop/collections/bmw-logo-1997.webp?v=1769059521&width=400" },
+  { name: "Chevrolet", img: "https://motorlandmia.com/cdn/shop/collections/unnamed_1.jpg?v=1769060352&width=400" },
+  { name: "Mazda", img: "https://motorlandmia.com/cdn/shop/collections/Mazda.webp?v=1769059539&width=400" },
+  { name: "Toyota", img: "https://motorlandmia.com/cdn/shop/collections/unnamed_2.jpg?v=1769061874&width=400" },
+  { name: "Ford", img: "https://motorlandmia.com/cdn/shop/collections/unnamed_3.jpg?v=1769061961&width=400" },
+  { name: "Nissan", img: "https://motorlandmia.com/cdn/shop/collections/2c140d83-5e05-4581-bad6-3ab8c362735f.png?v=1771015890&width=400" },
 ];
 
-const TRUST = [
-  { icon: Truck, title: "Fast Shipping", desc: "Most orders ship within 1–2 business days" },
-  { icon: ShieldCheck, title: "Quality Guaranteed", desc: "OEM and aftermarket parts, fully tested" },
-  { icon: RefreshCw, title: "Easy Returns", desc: "30-day hassle-free return policy" },
-  { icon: Headphones, title: "Expert Support", desc: "Real mechanics available Mon–Fri" },
+const CATEGORIES = [
+  { name: "Wiring", slug: "wiring", emoji: "🔌" },
+  { name: "Mirrors", slug: "mirrors", emoji: "🪞" },
+  { name: "Headlights", slug: "headlights", emoji: "💡" },
+  { name: "Door Handles", slug: "door-handles", emoji: "🚪" },
+  { name: "Bumpers", slug: "bumpers", emoji: "🚗" },
+  { name: "Grilles", slug: "grilles", emoji: "⬛" },
+  { name: "Radio", slug: "radio", emoji: "📻" },
+  { name: "Engine Parts", slug: "engine", emoji: "🔧" },
+];
+
+const VALUES = [
+  {
+    icon: Layers,
+    title: "Multi-Brand Selection",
+    desc: "We carry parts for BMW, Chevrolet, Mazda, Toyota, Ford, Nissan, and many more — all in one place.",
+  },
+  {
+    icon: DollarSign,
+    title: "Cost-Effective Solutions",
+    desc: "Wholesale pricing available for shops and resellers. Save more when you buy in bulk.",
+  },
+  {
+    icon: CheckCircle2,
+    title: "Quality Assurance",
+    desc: "Every part goes through rigorous testing standards so you can install with confidence.",
+  },
 ];
 
 export default async function HomePage() {
   const { items: featured } = await searchEbayItems("auto parts", undefined, 8, 0);
 
   return (
-    <div>
+    <div className="bg-white text-gray-900">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#111] via-[#1a1a1a] to-[#0f0f0f] py-20 px-4">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_right,_#f97316,_transparent_70%)]" />
-        <div className="max-w-7xl mx-auto relative">
-          <div className="max-w-2xl">
-            <span className="inline-block bg-orange-500/20 text-orange-400 text-xs font-semibold px-3 py-1 rounded-full mb-4 tracking-wider uppercase">
-              5,000+ Parts In Stock
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-6">
-              The Parts You Need,<br />
-              <span className="text-orange-500">When You Need Them.</span>
+      <section className="relative overflow-hidden min-h-[520px] flex items-center">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://motorlandmia.com/cdn/shop/files/ChatGPT_Image_Feb_12_2026_at_01_21_10_PM.png?v=1770920517&width=1920"
+            alt="Motorland Miami hero"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/55" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
+          <div className="max-w-xl">
+            <p className="text-red-400 font-semibold text-sm uppercase tracking-widest mb-3">
+              Auto Parts &amp; Accessories
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-5">
+              Quality Parts for<br />
+              <span className="text-red-500">Every Make &amp; Model</span>
             </h1>
-            <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-              Quality OEM and aftermarket auto parts for every make and model. Fast shipping, unbeatable prices, backed by expert support.
+            <p className="text-gray-300 text-lg mb-8">
+              Founded in 2020, Motorland Miami delivers reliable, affordable OEM and aftermarket parts — shipped fast from Miami.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
-                href="/products"
-                className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+                href="/catalog"
+                className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-md transition-colors text-sm uppercase tracking-wide"
               >
                 Shop All Parts <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                href="/products?category=engine"
-                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+                href="/contact"
+                className="inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white hover:text-gray-900 font-bold px-8 py-3.5 rounded-md transition-colors text-sm uppercase tracking-wide"
               >
-                Browse Engine Parts
+                Contact Us
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Trust signals */}
-      <section className="bg-orange-500 py-8 px-4">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {TRUST.map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="flex items-center gap-3 text-white">
-              <Icon className="w-6 h-6 shrink-0 opacity-80" />
-              <div>
-                <p className="font-semibold text-sm">{title}</p>
-                <p className="text-xs text-orange-100">{desc}</p>
-              </div>
-            </div>
-          ))}
+      {/* Shop by Brand */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl font-bold text-center text-gray-900 mb-2">Shop by Brand</h2>
+          <p className="text-center text-gray-500 text-sm mb-10">Find parts for your specific make</p>
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
+            {BRANDS.map((brand) => (
+              <Link
+                key={brand.name}
+                href={`/catalog?q=${brand.name.toLowerCase()}`}
+                className="group bg-white border border-gray-200 hover:border-red-500 hover:shadow-md rounded-xl p-4 flex flex-col items-center gap-3 transition-all"
+              >
+                <div className="w-16 h-16 relative">
+                  <Image
+                    src={brand.img}
+                    alt={brand.name}
+                    fill
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
+                <span className="text-xs font-semibold text-gray-700 group-hover:text-red-600 transition-colors">{brand.name}</span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Categories */}
+      {/* Shop by Category */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold">Shop by Category</h2>
-            <Link href="/products" className="text-orange-400 text-sm flex items-center gap-1 hover:text-orange-300 transition-colors">
-              All categories <ChevronRight className="w-4 h-4" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <h2 className="text-2xl font-bold text-center text-gray-900 mb-2">Shop by Category</h2>
+          <p className="text-center text-gray-500 text-sm mb-10">Browse our most popular part types</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat.slug}
-                href={`/products?category=${cat.slug}`}
-                className="group bg-[#1a1a1a] hover:bg-[#222] border border-white/10 hover:border-orange-500/50 rounded-xl p-5 transition-all"
+                href={`/catalog?category=${cat.slug}`}
+                className="group bg-gray-50 hover:bg-red-600 border border-gray-200 hover:border-red-600 rounded-xl p-6 text-center transition-all"
               >
-                <span className="text-3xl mb-3 block">{cat.icon}</span>
-                <h3 className="font-semibold text-white group-hover:text-orange-400 transition-colors mb-1">{cat.name}</h3>
-                <p className="text-xs text-gray-500">{cat.desc}</p>
+                <span className="text-4xl mb-3 block">{cat.emoji}</span>
+                <h3 className="font-semibold text-gray-800 group-hover:text-white transition-colors text-sm">{cat.name}</h3>
               </Link>
             ))}
           </div>
@@ -99,22 +138,25 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 px-4 bg-[#111]">
+      <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold">Featured Parts</h2>
-            <Link href="/products" className="text-orange-400 text-sm flex items-center gap-1 hover:text-orange-300 transition-colors">
-              View all <ChevronRight className="w-4 h-4" />
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Featured Parts</h2>
+              <p className="text-gray-500 text-sm mt-1">Hand-picked from our catalog</p>
+            </div>
+            <Link href="/catalog" className="inline-flex items-center gap-1 text-red-600 font-semibold text-sm hover:text-red-700 transition-colors">
+              View all <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {featured.map((item) => (
               <Link
                 key={item.itemId}
-                href={`/products/${item.itemId}`}
-                className="group bg-[#1a1a1a] border border-white/10 hover:border-orange-500/40 rounded-xl overflow-hidden transition-all"
+                href={`/catalog/${item.itemId}`}
+                className="group bg-white border border-gray-200 hover:border-red-500 hover:shadow-lg rounded-xl overflow-hidden transition-all"
               >
-                <div className="aspect-square bg-[#222] overflow-hidden">
+                <div className="aspect-square bg-gray-100 overflow-hidden">
                   {item.image?.imageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -127,13 +169,22 @@ export default async function HomePage() {
                   )}
                 </div>
                 <div className="p-4">
-                  <p className="text-xs text-gray-500 mb-1">{item.condition ?? "New"}</p>
-                  <h3 className="text-sm font-medium text-white line-clamp-2 mb-2 group-hover:text-orange-400 transition-colors">
+                  {item.condition && (
+                    <span className="inline-block text-[10px] font-semibold text-green-700 bg-green-50 border border-green-200 rounded px-1.5 py-0.5 mb-2">
+                      {item.condition}
+                    </span>
+                  )}
+                  <h3 className="text-sm font-medium text-gray-800 line-clamp-2 mb-2 group-hover:text-red-600 transition-colors leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-orange-500 font-bold">
-                    ${parseFloat(item.price.value).toFixed(2)}
-                  </p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-red-600 font-bold text-base">
+                      ${parseFloat(item.price.value).toFixed(2)}
+                    </p>
+                    <button className="text-xs bg-gray-900 hover:bg-red-600 text-white px-3 py-1.5 rounded-md transition-colors font-medium">
+                      Add
+                    </button>
+                  </div>
                 </div>
               </Link>
             ))}
@@ -141,21 +192,38 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Banner CTA */}
-      <section className="py-16 px-4">
+      {/* Value Props */}
+      <section className="py-16 px-4 bg-[#111111]">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-gradient-to-r from-orange-600 to-orange-500 rounded-2xl p-10 text-center">
-            <h2 className="text-3xl font-bold text-white mb-3">Can&apos;t find what you need?</h2>
-            <p className="text-orange-100 mb-6">Browse our full catalog of 5,000+ parts or contact our team for help finding the right part.</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/products" className="bg-white text-orange-600 font-semibold px-6 py-3 rounded-lg hover:bg-orange-50 transition-colors">
-                Browse Full Catalog
-              </Link>
-              <Link href="#" className="bg-orange-700 text-white font-semibold px-6 py-3 rounded-lg hover:bg-orange-800 transition-colors">
-                Contact Support
-              </Link>
-            </div>
+          <h2 className="text-2xl font-bold text-white text-center mb-2">Why Motorland Miami?</h2>
+          <p className="text-gray-400 text-sm text-center mb-12">Built with one goal — to make quality parts accessible.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {VALUES.map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="text-center">
+                <div className="inline-flex items-center justify-center w-14 h-14 bg-red-600 rounded-xl mb-5">
+                  <Icon className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-3">{title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
+              </div>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA Banner */}
+      <section className="py-16 px-4 bg-red-600">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl font-extrabold text-white mb-3">Ready to find your part?</h2>
+          <p className="text-red-100 mb-8 text-lg">
+            Over 5,000 items available. Wholesale pricing for shops &amp; resellers.
+          </p>
+          <Link
+            href="/catalog"
+            className="inline-flex items-center gap-2 bg-white text-red-600 hover:bg-gray-100 font-bold px-8 py-3.5 rounded-md transition-colors text-sm uppercase tracking-wide"
+          >
+            Browse Full Catalog <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
     </div>
