@@ -40,7 +40,7 @@ export default async function HomePage() {
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://motorlandmia.com/cdn/shop/files/ChatGPT_Image_Feb_12_2026_at_01_21_10_PM.png?v=1770920517&width=1920"
+            src="/hero.jpg"
             alt="Motorland Miami"
             className="w-full h-full object-cover object-center"
           />
