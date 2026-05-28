@@ -31,8 +31,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="mb-4">
-              <Image src="/logo.png" alt="Motorland Miami" width={80} height={80} className="object-contain" />
+            <div className="flex items-center gap-3 mb-4">
+              <Image src="/logo.jpg" alt="Motorland Miami" width={52} height={52} className="rounded-full object-cover" />
+              <div>
+                <span className="block text-white font-extrabold tracking-tight text-lg">MOTORLAND</span>
+                <span className="block text-red-500 text-xs font-semibold tracking-widest uppercase">Miami</span>
+              </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed mb-4">
               Founded in 2020. Quality auto parts for every make and model — reliable, affordable, and shipped fast from Miami.

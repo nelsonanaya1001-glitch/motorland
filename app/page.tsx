@@ -91,24 +91,24 @@ export default async function HomePage() {
       </section>
 
       {/* ── BRANDS ── */}
-      <section className="bg-[#111] py-14 px-4">
+      <section className="bg-gray-50 py-14 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-4 mb-10">
-            <div className="h-px flex-1 bg-white/10" />
-            <h2 className="text-white text-sm font-bold uppercase tracking-[0.25em]">Shop by Brand</h2>
-            <div className="h-px flex-1 bg-white/10" />
+            <div className="h-px flex-1 bg-gray-200" />
+            <h2 className="text-gray-900 text-sm font-bold uppercase tracking-[0.25em]">Shop by Brand</h2>
+            <div className="h-px flex-1 bg-gray-200" />
           </div>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
             {BRANDS.map((brand) => (
               <Link
                 key={brand.name}
                 href={`/catalog?q=${brand.name.toLowerCase()}`}
-                className="group bg-white/5 hover:bg-red-600 border border-white/10 hover:border-red-600 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-200"
+                className="group bg-white hover:bg-red-600 border border-gray-200 hover:border-red-600 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md"
               >
-                <div className="w-14 h-14 relative opacity-80 group-hover:opacity-100 transition-opacity">
+                <div className="w-14 h-14 relative">
                   <Image src={brand.img} alt={brand.name} fill className="object-contain" unoptimized />
                 </div>
-                <span className="text-xs font-bold text-gray-400 group-hover:text-white transition-colors tracking-wide uppercase">{brand.name}</span>
+                <span className="text-xs font-bold text-gray-500 group-hover:text-white transition-colors tracking-wide uppercase">{brand.name}</span>
               </Link>
             ))}
           </div>
@@ -127,14 +127,14 @@ export default async function HomePage() {
               <Link
                 key={cat.slug}
                 href={`/catalog?category=${cat.slug}`}
-                className="group relative bg-gray-900 hover:bg-red-600 rounded-lg px-5 py-8 overflow-hidden transition-all duration-200"
+                className="group relative bg-red-600 hover:bg-red-700 rounded-lg px-5 py-8 overflow-hidden transition-all duration-200"
               >
                 {/* Number watermark */}
-                <span className="absolute right-3 top-2 text-6xl font-black text-white/5 group-hover:text-white/10 select-none leading-none transition-colors">
+                <span className="absolute right-3 top-2 text-6xl font-black text-white/10 select-none leading-none">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="relative font-bold text-white text-base tracking-wide">{cat.name}</h3>
-                <div className="relative mt-2 flex items-center gap-1 text-xs text-gray-500 group-hover:text-red-100 transition-colors">
+                <div className="relative mt-2 flex items-center gap-1 text-xs text-red-200">
                   <span>Browse</span> <ArrowRight className="w-3 h-3" />
                 </div>
               </Link>
