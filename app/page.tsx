@@ -13,14 +13,14 @@ const BRANDS = [
 ];
 
 const CATEGORIES = [
-  { name: "Wiring", slug: "wiring", emoji: "🔌" },
-  { name: "Mirrors", slug: "mirrors", emoji: "🪞" },
-  { name: "Headlights", slug: "headlights", emoji: "💡" },
-  { name: "Door Handles", slug: "door-handles", emoji: "🚪" },
-  { name: "Bumpers", slug: "bumpers", emoji: "🚗" },
-  { name: "Grilles", slug: "grilles", emoji: "⬛" },
-  { name: "Radio", slug: "radio", emoji: "📻" },
-  { name: "Engine Parts", slug: "engine", emoji: "🔧" },
+  { name: "Wiring", slug: "wiring" },
+  { name: "Mirrors", slug: "mirrors" },
+  { name: "Headlights", slug: "headlights" },
+  { name: "Door Handles", slug: "door-handles" },
+  { name: "Bumpers", slug: "bumpers" },
+  { name: "Grilles", slug: "grilles" },
+  { name: "Radio", slug: "radio" },
+  { name: "Engine Parts", slug: "engine" },
 ];
 
 const VALUES = [
@@ -129,7 +129,6 @@ export default async function HomePage() {
                 href={`/catalog?category=${cat.slug}`}
                 className="group bg-gray-50 hover:bg-red-600 border border-gray-200 hover:border-red-600 rounded-xl p-6 text-center transition-all"
               >
-                <span className="text-4xl mb-3 block">{cat.emoji}</span>
                 <h3 className="font-semibold text-gray-800 group-hover:text-white transition-colors text-sm">{cat.name}</h3>
               </Link>
             ))}
