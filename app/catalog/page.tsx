@@ -48,15 +48,16 @@ export default async function CatalogPage({ searchParams }: Props) {
   return (
     <div className="bg-white min-h-screen">
       {/* Page header */}
-      <div className="bg-gray-50 border-b border-gray-200 py-8 px-4">
-        <div className="max-w-7xl mx-auto">
-          <nav className="text-xs text-gray-500 mb-2 flex gap-1">
-            <Link href="/" className="hover:text-red-600 transition-colors">Home</Link>
+      <div className="bg-[#111] border-b border-white/10 py-10 px-4 relative overflow-hidden">
+        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-red-600" />
+        <div className="max-w-7xl mx-auto pl-4">
+          <nav className="text-xs text-gray-500 mb-3 flex gap-1">
+            <Link href="/" className="hover:text-red-400 transition-colors">Home</Link>
             <span>/</span>
-            <span className="text-gray-800">{activeLabel}</span>
+            <span className="text-gray-300">{activeLabel}</span>
           </nav>
-          <h1 className="text-2xl font-bold text-gray-900">{activeLabel}</h1>
-          <p className="text-gray-500 text-sm mt-1">{total.toLocaleString()} products</p>
+          <h1 className="text-4xl font-black text-white tracking-tight">{activeLabel}</h1>
+          <p className="text-gray-400 text-sm mt-1">{total.toLocaleString()} parts available</p>
         </div>
       </div>
 
