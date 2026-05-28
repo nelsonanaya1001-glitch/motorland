@@ -21,18 +21,14 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 shrink-0">
+            <Link href="/" className="flex items-center shrink-0">
               <Image
-                src="/logo.jpg"
+                src="/logo.png"
                 alt="Motorland Miami"
-                width={60}
-                height={60}
-                className="rounded-full object-cover"
+                width={90}
+                height={90}
+                className="object-contain drop-shadow-md"
               />
-              <div className="leading-tight">
-                <span className="block text-xl font-extrabold tracking-tight text-[#111]">MOTORLAND</span>
-                <span className="block text-sm font-semibold text-red-600 tracking-widest uppercase">Miami</span>
-              </div>
             </Link>
 
             {/* Desktop nav links */}
