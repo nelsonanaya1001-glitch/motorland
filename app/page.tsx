@@ -36,7 +36,7 @@ export default async function HomePage() {
     <div className="bg-white text-gray-900">
 
       {/* ── HERO ── */}
-      <section className="relative overflow-hidden min-h-[600px] flex items-center">
+      <section className="relative overflow-hidden min-h-[600px] flex items-center bg-[#1a0a0a]">
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -46,9 +46,6 @@ export default async function HomePage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
         </div>
-
-        {/* Red accent bar left edge */}
-        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-red-600 z-10" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-8 sm:px-10 lg:px-14 py-28 w-full">
           <div className="max-w-[48%] sm:max-w-sm lg:max-w-lg">
