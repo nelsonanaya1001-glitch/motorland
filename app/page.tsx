@@ -100,12 +100,13 @@ export default async function HomePage() {
               <Link
                 key={brand.name}
                 href={`/catalog?q=${brand.name.toLowerCase()}`}
-                className="group bg-white hover:bg-red-600 border border-gray-200 hover:border-red-600 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md"
+                className="group bg-white hover:bg-red-600 border border-gray-200 hover:border-red-600 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md overflow-hidden"
               >
                 <div className="w-14 h-14 relative">
-                  <Image src={brand.img} alt={brand.name} fill className="object-contain" unoptimized />
+                  <Image src={brand.img} alt={brand.name} fill className="object-contain group-hover:brightness-0 group-hover:invert transition-all duration-200" unoptimized />
                 </div>
-                <span className="text-xs font-bold text-gray-500 group-hover:text-white transition-colors tracking-wide uppercase">{brand.name}</span>
+                <span className="text-xs font-bold tracking-wide uppercase text-gray-500 group-hover:hidden">{brand.name}</span>
+                <span className="text-xs font-bold tracking-wide uppercase text-white hidden group-hover:block">Shop Now</span>
               </Link>
             ))}
           </div>
