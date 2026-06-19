@@ -15,7 +15,7 @@
         {%- if product.featured_image -%}
           <img src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.featured_image.alt | escape }}" class="max-w-full max-h-full object-contain">
         {%- else -%}
-          <div class="w-full h-full flex items-center justify-center text-8xl">🔧</div>
+          <img src="{{ 'logo.png' | asset_url }}" alt="{{ product.title | escape }}" class="max-w-[50%] max-h-[50%] object-contain opacity-25">
         {%- endif -%}
       </div>
 
@@ -62,6 +62,7 @@
           {%- endunless -%}
 
           <input type="hidden" name="id" value="{{ current_variant.id }}">
+          <input type="hidden" name="return_to" value="/cart">
 
           <!-- Quantity + Add to cart -->
           <div class="flex gap-3 mb-8">

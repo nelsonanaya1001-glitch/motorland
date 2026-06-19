@@ -8,7 +8,7 @@
   <!-- ── HERO ── -->
   <section class="relative overflow-hidden min-h-[600px] flex items-center bg-[#1a0a0a]">
     <div class="absolute inset-0">
-      <div class="absolute inset-0 bg-gradient-to-br from-[#2a0a0a] via-[#1a0a0a] to-black"></div>
+      <img src="{{ 'hero.jpg' | asset_url }}" alt="Motorland Miami" class="w-full h-full object-cover object-center">
       <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-8 sm:px-10 lg:px-14 py-28 w-full">
@@ -26,7 +26,7 @@
       <div class="max-w-7xl mx-auto px-8 py-3 flex gap-8 sm:gap-16 text-sm">
         <div class="text-white"><span class="font-black text-red-500 text-lg">5,000+</span> Parts in Stock</div>
         <div class="text-white"><span class="font-black text-red-500 text-lg">Est.</span> 2020 · Miami, FL</div>
-        <div class="hidden sm:block text-white"><span class="font-black text-red-500 text-lg">6</span> Major Brands</div>
+        <div class="hidden sm:block text-white"><span class="font-black text-red-500 text-lg">Most</span> Brands Available</div>
       </div>
     </div>
   </section>
@@ -41,9 +41,12 @@
       </div>
       <div class="grid grid-cols-3 sm:grid-cols-6 gap-3">
         {%- assign brand_names = "BMW,Chevrolet,Mazda,Toyota,Ford,Nissan" | split: "," -%}
+        {%- assign brand_imgs = "https://motorlandmia.com/cdn/shop/collections/bmw-logo-1997.webp?v=1769059521&width=400,https://motorlandmia.com/cdn/shop/collections/unnamed_1.jpg?v=1769060352&width=400,https://motorlandmia.com/cdn/shop/collections/Mazda.webp?v=1769059539&width=400,https://motorlandmia.com/cdn/shop/collections/unnamed_2.jpg?v=1769061874&width=400,https://motorlandmia.com/cdn/shop/collections/unnamed_3.jpg?v=1769061961&width=400,https://motorlandmia.com/cdn/shop/collections/2c140d83-5e05-4581-bad6-3ab8c362735f.png?v=1771015890&width=400" | split: "," -%}
         {%- for name in brand_names -%}
           <a href="{{ routes.search_url }}?q={{ name | downcase | url_encode }}" class="group bg-white hover:bg-red-600 border border-gray-200 hover:border-red-600 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md overflow-hidden">
-            <div class="w-14 h-14 flex items-center justify-center text-2xl font-black text-gray-300 group-hover:text-white">{{ name | slice: 0, 1 }}</div>
+            <div class="w-14 h-14 flex items-center justify-center">
+              <img src="{{ brand_imgs[forloop.index0] }}" alt="{{ name }}" class="max-w-full max-h-full object-contain group-hover:brightness-0 group-hover:invert transition-all duration-200">
+            </div>
             <span class="text-xs font-bold tracking-wide uppercase text-gray-500 group-hover:hidden">{{ name }}</span>
             <span class="text-xs font-bold tracking-wide uppercase text-white hidden group-hover:block">Shop Now</span>
           </a>
@@ -92,7 +95,7 @@
               {%- if product.featured_image -%}
                 <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
               {%- else -%}
-                <div class="w-full h-full flex items-center justify-center text-4xl">🔧</div>
+                <img src="{{ 'logo.png' | asset_url }}" alt="{{ product.title | escape }}" class="max-w-[55%] max-h-[55%] object-contain opacity-25">
               {%- endif -%}
             </div>
             <div class="p-4 flex flex-col flex-1">
