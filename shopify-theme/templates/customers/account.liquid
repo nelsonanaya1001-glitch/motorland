@@ -1,0 +1,20 @@
+<div class="bg-white min-h-screen"><div class="max-w-4xl mx-auto px-4 py-16">
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-2xl font-black text-gray-900">My Account</h1>
+    <a href="{{ routes.account_logout_url }}" class="text-sm text-gray-500 hover:text-red-600">Log out</a>
+  </div>
+  <p class="text-gray-600 mb-8">Welcome back, {{ customer.first_name | default: customer.email }}.</p>
+  <h2 class="text-lg font-bold text-gray-900 mb-4">Order history</h2>
+  {%- if customer.orders.size > 0 -%}
+    <div class="space-y-3">
+      {%- for order in customer.orders -%}
+        <a href="{{ order.customer_url }}" class="flex justify-between border border-gray-200 rounded-lg px-4 py-3 hover:border-red-500 transition-colors text-sm">
+          <span class="font-semibold text-gray-900">{{ order.name }}</span>
+          <span class="text-gray-500">{{ order.created_at | date: '%b %d, %Y' }}</span>
+          <span class="text-red-600 font-bold">{{ order.total_price | money }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  {%- else -%}<p class="text-gray-400 text-sm">You haven&apos;t placed any orders yet.</p>{%- endif -%}
+  <p class="mt-8"><a href="{{ routes.account_addresses_url }}" class="text-sm text-red-600 hover:underline">Manage addresses</a></p>
+</div></div>

@@ -1,0 +1,17 @@
+{%- paginate blog.articles by 12 -%}
+<div class="bg-white min-h-screen">
+  <div class="bg-[#111] border-b border-white/10 py-10 px-4 relative overflow-hidden">
+    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-600"></div>
+    <div class="max-w-7xl mx-auto pl-4"><h1 class="text-4xl font-black text-white tracking-tight">{{ blog.title }}</h1></div>
+  </div>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    {%- for article in blog.articles -%}
+      <a href="{{ article.url }}" class="block border border-gray-200 rounded-xl p-6 hover:border-red-500 transition-colors">
+        <h2 class="text-xl font-bold text-gray-900 hover:text-red-600">{{ article.title }}</h2>
+        <p class="text-xs text-gray-400 mt-1">{{ article.published_at | date: '%B %d, %Y' }}</p>
+        <p class="text-sm text-gray-600 mt-3">{{ article.excerpt_or_content | strip_html | truncatewords: 40 }}</p>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+{%- endpaginate -%}

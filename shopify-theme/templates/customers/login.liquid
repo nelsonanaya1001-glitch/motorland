@@ -1,0 +1,12 @@
+<div class="bg-white min-h-screen"><div class="max-w-md mx-auto px-4 py-16">
+  <h1 class="text-2xl font-black text-gray-900 mb-6 text-center">Log in</h1>
+  {% form 'customer_login' %}
+    {%- if form.errors -%}<p class="text-red-600 text-sm mb-3">{{ form.errors | default_errors }}</p>{%- endif -%}
+    <div class="space-y-4">
+      <input type="email" name="customer[email]" placeholder="Email" class="w-full border border-gray-300 rounded-md px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-red-500">
+      <input type="password" name="customer[password]" placeholder="Password" class="w-full border border-gray-300 rounded-md px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-red-500">
+      <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-md text-sm uppercase tracking-wide">Sign In</button>
+    </div>
+  {% endform %}
+  <p class="text-sm text-gray-500 text-center mt-6">New here? <a href="{{ routes.account_register_url }}" class="text-red-600 hover:underline">Create an account</a></p>
+</div></div>

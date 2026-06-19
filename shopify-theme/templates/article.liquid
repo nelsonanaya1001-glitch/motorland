@@ -1,0 +1,8 @@
+<div class="bg-white min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+    <a href="{{ blog.url }}" class="text-sm text-gray-500 hover:text-red-600">&larr; {{ blog.title }}</a>
+    <h1 class="text-3xl font-black text-gray-900 tracking-tight mt-4 mb-2">{{ article.title }}</h1>
+    <p class="text-xs text-gray-400 mb-8">{{ article.published_at | date: '%B %d, %Y' }}</p>
+    <div class="prose prose-sm max-w-none text-gray-700">{{ article.content }}</div>
+  </div>
+</div>
