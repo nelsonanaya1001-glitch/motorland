@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, CheckCircle2, Layers, DollarSign, Phone } from "lucide-react";
-import { searchEbayItems } from "@/lib/ebay";
+import { searchProducts } from "@/lib/shopify";
 
 const BRANDS = [
   { name: "BMW", img: "https://motorlandmia.com/cdn/shop/collections/bmw-logo-1997.webp?v=1769059521&width=400" },
@@ -30,7 +30,7 @@ const VALUES = [
 ];
 
 export default async function HomePage() {
-  const { items: featured } = await searchEbayItems("auto parts", undefined, 8, 0);
+  const { items: featured } = await searchProducts("auto parts", undefined, 8, 0);
 
   return (
     <div className="bg-white text-gray-900">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ShoppingCart, ArrowLeft, ShieldCheck, Truck, RefreshCw, Star } from "lucide-react";
-import { getEbayItem, searchEbayItems } from "@/lib/ebay";
+import { getProduct, searchProducts } from "@/lib/shopify";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -8,7 +8,7 @@ interface Props {
 
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;
-  const item = await getEbayItem(id);
+  const item = await getProduct(id);
 
   if (!item) {
     return (
@@ -19,7 +19,7 @@ export default async function ProductPage({ params }: Props) {
     );
   }
 
-  const { items: related } = await searchEbayItems("auto parts", undefined, 4, 0);
+  const { items: related } = await searchProducts("auto parts", undefined, 4, 0);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -102,7 +102,7 @@ export default async function ProductPage({ params }: Props) {
             </div>
           </div>
 
-          {/* eBay link */}
+          {/* Storefront link */}
           {item.itemWebUrl && item.itemWebUrl !== "#" && (
             <a
               href={item.itemWebUrl}
@@ -110,7 +110,7 @@ export default async function ProductPage({ params }: Props) {
               rel="noopener noreferrer"
               className="mt-4 text-sm text-gray-500 hover:text-orange-400 transition-colors underline"
             >
-              View on eBay
+              View full product details
             </a>
           )}
         </div>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SlidersHorizontal } from "lucide-react";
-import { searchEbayItems } from "@/lib/ebay";
+import { searchProducts } from "@/lib/shopify";
 
 const CATEGORIES = [
   { label: "All Parts", value: "" },
@@ -40,7 +40,7 @@ export default async function CatalogPage({ searchParams }: Props) {
   const limit = 24;
   const offset = (page - 1) * limit;
 
-  const { items, total } = await searchEbayItems(query, category || undefined, limit, offset);
+  const { items, total } = await searchProducts(query, category || undefined, limit, offset);
   const totalPages = Math.ceil(total / limit);
 
   const activeLabel = CATEGORIES.find((c) => c.value === category)?.label ?? "All Parts";

@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "motorlandmia.com" },
       { protocol: "https", hostname: "placehold.co" },
-      { protocol: "https", hostname: "i.ebayimg.com" },
+      { protocol: "https", hostname: "cdn.shopify.com" },
     ],
   },
 };
