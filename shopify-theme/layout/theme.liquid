@@ -62,5 +62,39 @@
     </main>
 
     {% section 'footer' %}
+
+    <script>
+      // AJAX add-to-cart: success -> go to the cart page; failure (e.g. sold
+      // out) -> show an inline message instead of Shopify's full-page error.
+      document.addEventListener('submit', function (e) {
+        var form = e.target.closest('form.js-add-to-cart');
+        if (!form) return;
+        e.preventDefault();
+        var btn = form.querySelector('[type="submit"]');
+        if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = 'Adding...'; }
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        })
+          .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+          .then(function (res) {
+            if (res.ok) { window.location.href = '/cart'; return; }
+            showCartError(form, (res.d && res.d.description) || 'Sorry, this item could not be added.');
+          })
+          .catch(function () { showCartError(form, 'Something went wrong. Please try again.'); })
+          .finally(function () { if (btn) { btn.disabled = false; if (btn.dataset.label) btn.textContent = btn.dataset.label; } });
+      });
+
+      function showCartError(form, msg) {
+        var holder = form.parentElement.querySelector('.cart-error');
+        if (!holder) {
+          holder = document.createElement('p');
+          holder.className = 'cart-error text-xs text-red-600 mt-2';
+          form.parentElement.appendChild(holder);
+        }
+        holder.textContent = msg;
+      }
+    </script>
   </body>
 </html>

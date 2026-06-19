@@ -16,10 +16,9 @@
     <h3 class="text-sm font-medium text-gray-800 line-clamp-2 mb-3 group-hover:text-red-600 transition-colors leading-snug">{{ product.title }}</h3>
     <div class="flex items-center justify-between gap-2 mt-auto">
       <p class="text-red-600 font-bold">{{ product.price | money }}</p>
-      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="shrink-0" onclick="event.stopPropagation()">
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="js-add-to-cart shrink-0" onclick="event.stopPropagation()">
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        <input type="hidden" name="return_to" value="/cart">
-        <button type="submit" class="text-xs bg-gray-900 hover:bg-red-600 text-white px-2 py-1 rounded transition-colors"{% unless product.available %} disabled{% endunless %}>Add</button>
+        <button type="submit" class="text-xs bg-gray-900 hover:bg-red-600 text-white px-2 py-1 rounded transition-colors disabled:opacity-50"{% unless product.available %} disabled{% endunless %}>{% if product.available %}Add{% else %}Sold out{% endif %}</button>
       </form>
     </div>
   </div>

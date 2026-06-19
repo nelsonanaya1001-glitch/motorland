@@ -35,7 +35,7 @@
           <span class="text-sm text-gray-500">(24 reviews)</span>
         </div>
 
-        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" id="product-form">
+        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" id="product-form" class="js-add-to-cart">
           {%- assign current_variant = product.selected_or_first_available_variant -%}
           <div class="text-4xl font-extrabold text-red-600 mb-6" id="price">
             {{ current_variant.price | money }}
@@ -62,7 +62,6 @@
           {%- endunless -%}
 
           <input type="hidden" name="id" value="{{ current_variant.id }}">
-          <input type="hidden" name="return_to" value="/cart">
 
           <!-- Quantity + Add to cart -->
           <div class="flex gap-3 mb-8">
