@@ -11,9 +11,9 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
       <!-- Image -->
-      <div class="aspect-square bg-gray-50 border border-gray-200 rounded-2xl overflow-hidden">
+      <div class="aspect-square bg-white border border-gray-200 rounded-2xl overflow-hidden flex items-center justify-center p-4">
         {%- if product.featured_image -%}
-          <img src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.featured_image.alt | escape }}" class="w-full h-full object-cover">
+          <img src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.featured_image.alt | escape }}" class="max-w-full max-h-full object-contain">
         {%- else -%}
           <div class="w-full h-full flex items-center justify-center text-8xl">🔧</div>
         {%- endif -%}
@@ -80,11 +80,16 @@
           <div class="flex items-center gap-3 text-sm text-gray-700"><span class="text-red-600">{% render 'icon', name: 'shield' %}</span> Quality guaranteed — every part tested before shipping</div>
         </div>
 
-        {%- if product.description != blank -%}
-          <div class="prose prose-sm mt-8 text-gray-600 max-w-none">{{ product.description }}</div>
-        {%- endif -%}
       </div>
     </div>
+
+    <!-- Description (full width, centered) -->
+    {%- if product.description != blank -%}
+      <div class="max-w-3xl mx-auto border-t border-gray-100 pt-10 mb-16">
+        <h2 class="text-xl font-bold text-gray-900 mb-6 text-center">Product Details</h2>
+        <div class="product-description text-gray-700 text-center">{{ product.description }}</div>
+      </div>
+    {%- endif -%}
 
     <a href="{{ routes.all_products_collection_url }}" class="inline-flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors text-sm mb-12">{% render 'icon', name: 'arrow-left', size: 16 %} Back to catalog</a>
 

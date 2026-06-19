@@ -1,8 +1,8 @@
 {%- comment -%} Renders one product card. Pass: product {%- endcomment -%}
 <a href="{{ product.url }}" class="group bg-white border border-gray-200 hover:border-red-500 hover:shadow-md rounded-xl overflow-hidden transition-all flex flex-col">
-  <div class="aspect-square bg-gray-50 overflow-hidden relative">
+  <div class="aspect-square bg-white overflow-hidden relative flex items-center justify-center p-3">
     {%- if product.featured_image -%}
-      <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+      <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
     {%- else -%}
       <div class="w-full h-full flex items-center justify-center text-4xl">🔧</div>
     {%- endif -%}
