@@ -13,7 +13,7 @@
       { "type": "image_picker", "id": "favicon", "label": "Favicon" },
       { "type": "header", "content": "Contact details" },
       { "type": "text", "id": "phone", "label": "Phone", "default": "305 716 9794" },
-      { "type": "text", "id": "email", "label": "Email", "default": "support@motorlandmia.com" }
+      { "type": "text", "id": "email", "label": "Email", "default": "infomotorlandmiami@gmail.com" }
     ]
   }
 ]
