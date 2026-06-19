@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "hero": { "type": "hero" },
+    "brands": { "type": "brands" },
+    "categories": { "type": "categories" },
+    "featured": { "type": "featured-products" },
+    "value_props": { "type": "value-props" },
+    "cta": { "type": "cta" }
+  },
+  "order": ["hero", "brands", "categories", "featured", "value_props", "cta"]
+}

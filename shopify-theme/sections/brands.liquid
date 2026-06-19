@@ -1,0 +1,44 @@
+<section class="bg-gray-50 py-14 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex items-center gap-4 mb-10">
+      <div class="h-px flex-1 bg-gray-200"></div>
+      <h2 class="text-gray-900 text-sm font-bold uppercase tracking-[0.25em]">{{ section.settings.heading }}</h2>
+      <div class="h-px flex-1 bg-gray-200"></div>
+    </div>
+    <div class="grid grid-cols-3 sm:grid-cols-6 gap-3">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.url }}" class="group bg-white hover:bg-red-600 border border-gray-200 hover:border-red-600 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md overflow-hidden" {{ block.shopify_attributes }}>
+          <div class="w-14 h-14 relative flex items-center justify-center">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 200 }}" alt="{{ block.settings.name }}" class="max-w-full max-h-full object-contain group-hover:brightness-0 group-hover:invert transition-all duration-200">
+            {%- endif -%}
+          </div>
+          <span class="text-xs font-bold tracking-wide uppercase text-gray-500 group-hover:hidden">{{ block.settings.name }}</span>
+          <span class="text-xs font-bold tracking-wide uppercase text-white hidden group-hover:block">Shop Now</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brands",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by Brand" }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "image_picker", "id": "image", "label": "Logo" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [{ "name": "Brands", "blocks": [{ "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }] }]
+}
+{% endschema %}

@@ -1,0 +1,96 @@
+<footer class="bg-[#111111] text-gray-300">
+  <!-- Newsletter -->
+  <div class="bg-red-600 py-10 px-4">
+    <div class="max-w-2xl mx-auto text-center">
+      <h3 class="text-white font-bold text-xl mb-2">{{ section.settings.newsletter_title }}</h3>
+      <p class="text-red-100 text-sm mb-5">{{ section.settings.newsletter_text }}</p>
+      {% form 'customer' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="flex gap-2 max-w-md mx-auto">
+          <input type="email" name="contact[email]" placeholder="Your email address" required class="flex-1 px-4 py-2.5 rounded-md text-sm text-gray-900 focus:outline-none">
+          <button type="submit" class="bg-[#111] text-white font-semibold px-5 py-2.5 rounded-md hover:bg-gray-800 transition-colors text-sm shrink-0">Subscribe</button>
+        </div>
+        {%- if form.posted_successfully? -%}
+          <p class="text-white text-sm mt-3">Thanks for subscribing!</p>
+        {%- endif -%}
+      {% endform %}
+    </div>
+  </div>
+
+  <!-- Main footer -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Brand -->
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-3 mb-4">
+          {%- if section.settings.logo != blank -%}
+            <img src="{{ section.settings.logo | image_url: width: 104 }}" alt="{{ shop.name }}" class="rounded-full object-cover w-[52px] h-[52px]">
+          {%- endif -%}
+          <div>
+            <span class="block text-white font-extrabold tracking-tight text-lg">MOTORLAND</span>
+            <span class="block text-red-500 text-xs font-semibold tracking-widest uppercase">Miami</span>
+          </div>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">{{ section.settings.about }}</p>
+      </div>
+
+      <!-- Catalog -->
+      <div>
+        <h3 class="text-xs font-bold text-white uppercase tracking-wider mb-4">{{ section.settings.menu_1.title | default: 'Catalog' }}</h3>
+        <ul class="space-y-2 text-sm">
+          {%- for link in section.settings.menu_1.links -%}
+            <li><a href="{{ link.url }}" class="text-gray-400 hover:text-red-400 transition-colors">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <!-- Support -->
+      <div>
+        <h3 class="text-xs font-bold text-white uppercase tracking-wider mb-4">{{ section.settings.menu_2.title | default: 'Support' }}</h3>
+        <ul class="space-y-2 text-sm">
+          {%- for link in section.settings.menu_2.links -%}
+            <li><a href="{{ link.url }}" class="text-gray-400 hover:text-red-400 transition-colors">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h3 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Contact</h3>
+        <ul class="space-y-4 text-sm">
+          <li><a href="tel:{{ section.settings.phone | remove: ' ' }}" class="flex items-center gap-2 text-gray-400 hover:text-red-400 transition-colors"><span class="text-red-500">{% render 'icon', name: 'phone', size: 16 %}</span>{{ section.settings.phone }}</a></li>
+          <li><a href="mailto:{{ section.settings.email }}" class="flex items-center gap-2 text-gray-400 hover:text-red-400 transition-colors"><span class="text-red-500">{% render 'icon', name: 'mail', size: 16 %}</span>{{ section.settings.email }}</a></li>
+          <li class="flex items-start gap-2 text-gray-400"><span class="text-red-500 mt-0.5">{% render 'icon', name: 'map-pin', size: 16 %}</span><span>{{ section.settings.address }}</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-500">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      <div class="flex gap-4">
+        <a href="{{ pages.privacy-policy.url | default: '#' }}" class="hover:text-gray-300 transition-colors">Privacy Policy</a>
+        <a href="{{ pages.terms-of-service.url | default: '#' }}" class="hover:text-gray-300 transition-colors">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "textarea", "id": "about", "label": "About text", "default": "Founded in 2020. Quality auto parts for every make and model — reliable, affordable, and shipped fast from Miami." },
+    { "type": "text", "id": "newsletter_title", "label": "Newsletter title", "default": "Get deals in your inbox" },
+    { "type": "text", "id": "newsletter_text", "label": "Newsletter text", "default": "Subscribe for exclusive discounts, new arrivals, and wholesale offers." },
+    { "type": "link_list", "id": "menu_1", "label": "Column 1 menu (Catalog)" },
+    { "type": "link_list", "id": "menu_2", "label": "Column 2 menu (Support)" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "305 716 9794" },
+    { "type": "text", "id": "email", "label": "Email", "default": "support@motorlandmia.com" },
+    { "type": "html", "id": "address", "label": "Address", "default": "Miami, Florida<br>Mon–Fri 9am–6pm EST" }
+  ]
+}
+{% endschema %}

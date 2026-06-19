@@ -1,0 +1,26 @@
+<section class="bg-red-600 py-14 px-4">
+  <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+    <div>
+      <h2 class="text-3xl font-black text-white tracking-tight">{{ section.settings.heading }}</h2>
+      <p class="text-red-100 mt-1">{{ section.settings.text }}</p>
+    </div>
+    <div class="flex flex-wrap gap-3 shrink-0">
+      <a href="tel:{{ section.settings.phone | remove: ' ' }}" class="inline-flex items-center gap-2 bg-white text-red-600 font-black px-6 py-3.5 rounded-sm hover:bg-gray-100 transition-colors text-sm uppercase tracking-widest">{% render 'icon', name: 'phone', size: 16 %} {{ section.settings.phone }}</a>
+      <a href="{{ section.settings.button_url | default: routes.all_products_collection_url }}" class="inline-flex items-center gap-2 border-2 border-white text-white font-black px-6 py-3.5 rounded-sm hover:bg-white hover:text-red-600 transition-colors text-sm uppercase tracking-widest">{{ section.settings.button_label }} {% render 'icon', name: 'arrow-right', size: 16 %}</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CTA Strip",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Ready to find your part?" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Wholesale pricing available. Call us or browse the full catalog." },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "305 716 9794" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Browse Catalog" },
+    { "type": "url", "id": "button_url", "label": "Button link" }
+  ],
+  "presets": [{ "name": "CTA Strip" }]
+}
+{% endschema %}

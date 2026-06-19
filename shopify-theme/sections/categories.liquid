@@ -1,0 +1,39 @@
+<section class="py-20 px-4 bg-white">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-12">
+      <p class="text-red-600 text-xs font-bold uppercase tracking-[0.2em] mb-2">{{ section.settings.eyebrow }}</p>
+      <h2 class="text-4xl font-black text-gray-900 tracking-tight">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.url }}" class="group relative bg-red-600 hover:bg-red-700 rounded-lg px-5 py-8 overflow-hidden transition-all duration-200" {{ block.shopify_attributes }}>
+          <span class="absolute right-3 top-2 text-6xl font-black text-white/10 select-none leading-none">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <h3 class="relative font-bold text-white text-base tracking-wide">{{ block.settings.name }}</h3>
+          <div class="relative mt-2 flex items-center gap-1 text-xs text-red-200"><span>Browse</span> {% render 'icon', name: 'arrow-right', size: 12 %}</div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Categories",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Browse" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by Category" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "url", "id": "url", "label": "Link (collection)" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [{ "name": "Categories", "blocks": [{ "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }] }]
+}
+{% endschema %}

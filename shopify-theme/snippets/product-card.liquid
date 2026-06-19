@@ -1,0 +1,25 @@
+{%- comment -%} Renders one product card. Pass: product {%- endcomment -%}
+<a href="{{ product.url }}" class="group bg-white border border-gray-200 hover:border-red-500 hover:shadow-md rounded-xl overflow-hidden transition-all flex flex-col">
+  <div class="aspect-square bg-gray-50 overflow-hidden relative">
+    {%- if product.featured_image -%}
+      <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+    {%- else -%}
+      <div class="w-full h-full flex items-center justify-center text-4xl">🔧</div>
+    {%- endif -%}
+    {%- if product.available == false -%}
+      <span class="absolute top-2 left-2 text-[10px] font-bold text-white bg-gray-600 px-2 py-0.5 rounded-sm">Sold out</span>
+    {%- elsif product.tags contains 'new' -%}
+      <span class="absolute top-2 left-2 text-[10px] font-bold text-white bg-green-600 px-2 py-0.5 rounded-sm">New</span>
+    {%- endif -%}
+  </div>
+  <div class="p-4 flex flex-col flex-1">
+    <h3 class="text-sm font-medium text-gray-800 line-clamp-2 mb-3 group-hover:text-red-600 transition-colors leading-snug">{{ product.title }}</h3>
+    <div class="flex items-center justify-between gap-2 mt-auto">
+      <p class="text-red-600 font-bold">{{ product.price | money }}</p>
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="shrink-0">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="text-xs bg-gray-900 hover:bg-red-600 text-white px-2 py-1 rounded transition-colors"{% unless product.available %} disabled{% endunless %}>Add</button>
+      </form>
+    </div>
+  </div>
+</a>

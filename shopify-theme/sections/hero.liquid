@@ -1,0 +1,48 @@
+<section class="relative overflow-hidden min-h-[600px] flex items-center bg-[#1a0a0a]">
+  <div class="absolute inset-0">
+    {%- if section.settings.image != blank -%}
+      <img src="{{ section.settings.image | image_url: width: 2000 }}" alt="" class="w-full h-full object-cover object-center">
+    {%- endif -%}
+    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-8 sm:px-10 lg:px-14 py-28 w-full">
+    <div class="max-w-[48%] sm:max-w-sm lg:max-w-lg">
+      <span class="inline-block border border-red-500 text-red-400 text-[11px] font-bold px-3 py-1 rounded-sm tracking-[0.2em] uppercase mb-5">{{ section.settings.eyebrow }}</span>
+      <h1 class="text-5xl sm:text-6xl font-black text-white leading-[1.05] tracking-tight mb-6">{{ section.settings.heading }}</h1>
+      <p class="text-gray-300 text-base mb-10 leading-relaxed max-w-sm">{{ section.settings.subheading }}</p>
+      <div class="flex flex-wrap gap-3">
+        <a href="{{ section.settings.button_url | default: routes.all_products_collection_url }}" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-7 py-3.5 rounded-sm transition-colors text-sm uppercase tracking-widest">{{ section.settings.button_label }} {% render 'icon', name: 'arrow-right', size: 16 %}</a>
+        <a href="{{ section.settings.button_2_url }}" class="inline-flex items-center gap-2 border border-white/50 hover:border-white text-white font-bold px-7 py-3.5 rounded-sm transition-colors text-sm uppercase tracking-widest">{{ section.settings.button_2_label }}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm border-t border-white/10 z-10">
+    <div class="max-w-7xl mx-auto px-8 py-3 flex gap-8 sm:gap-16 text-sm">
+      <div class="text-white"><span class="font-black text-red-500 text-lg">{{ section.settings.stat_1_value }}</span> {{ section.settings.stat_1_label }}</div>
+      <div class="text-white"><span class="font-black text-red-500 text-lg">{{ section.settings.stat_2_value }}</span> {{ section.settings.stat_2_label }}</div>
+      <div class="hidden sm:block text-white"><span class="font-black text-red-500 text-lg">{{ section.settings.stat_3_value }}</span> {{ section.settings.stat_3_label }}</div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Auto Parts & Accessories" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "Quality Parts<br>for <span class=\"text-red-500\">Every Make</span><br>& Model." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Founded in 2020 — Motorland Miami ships reliable OEM and aftermarket parts straight from Miami, FL." },
+    { "type": "text", "id": "button_label", "label": "Primary button", "default": "Shop All Parts" },
+    { "type": "url", "id": "button_url", "label": "Primary button link" },
+    { "type": "text", "id": "button_2_label", "label": "Secondary button", "default": "Contact Us" },
+    { "type": "url", "id": "button_2_url", "label": "Secondary button link" },
+    { "type": "text", "id": "stat_1_value", "default": "5,000+" }, { "type": "text", "id": "stat_1_label", "default": "Parts in Stock" },
+    { "type": "text", "id": "stat_2_value", "default": "Est." }, { "type": "text", "id": "stat_2_label", "default": "2020 · Miami, FL" },
+    { "type": "text", "id": "stat_3_value", "default": "6" }, { "type": "text", "id": "stat_3_label", "default": "Major Brands" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}
