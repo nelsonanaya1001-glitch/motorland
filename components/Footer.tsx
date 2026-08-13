@@ -14,7 +14,7 @@ export default function Footer() {
             <input
               type="email"
               placeholder="Your email address"
-              className="flex-1 px-4 py-2.5 rounded-md text-sm text-gray-900 focus:outline-none"
+              className="flex-1 px-4 py-2.5 rounded-md text-sm text-gray-900 bg-white placeholder-gray-500 focus:outline-none"
             />
             <button
               type="submit"
