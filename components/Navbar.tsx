@@ -4,10 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShoppingCart, Search, Menu, X, User } from "lucide-react";
 import { useState } from "react";
+import { useCart } from "@/components/CartProvider";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const { count } = useCart();
 
   return (
     <header className="sticky top-0 z-50 shadow-md">
@@ -55,7 +57,9 @@ export default function Navbar() {
               </Link>
               <Link href="/cart" className="relative p-2 text-gray-500 hover:text-red-600 transition-colors">
                 <ShoppingCart className="w-5 h-5" />
-                <span className="absolute top-1 right-1 bg-red-600 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                {count > 0 && (
+                  <span className="absolute top-1 right-1 bg-red-600 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">{count}</span>
+                )}
               </Link>
               <button
                 className="md:hidden p-2 text-gray-500 hover:text-red-600 transition-colors"

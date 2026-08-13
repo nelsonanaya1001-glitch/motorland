@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ShoppingCart, ArrowLeft, ShieldCheck, Truck, RefreshCw, Star } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Truck, RefreshCw, Star } from "lucide-react";
 import { getEbayItem, searchEbayItems } from "@/lib/ebay";
+import AddToCart from "@/components/AddToCart";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -78,9 +79,17 @@ export default async function ProductPage({ params }: Props) {
 
           {/* Add to cart */}
           <div className="flex gap-3 mb-8">
-            <button className="flex-1 flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
-              <ShoppingCart className="w-5 h-5" /> Add to Cart
-            </button>
+            <AddToCart
+              withQuantity
+              product={{
+                itemId: item.itemId,
+                title: item.title,
+                price: parseFloat(item.price.value),
+                currency: item.price.currency,
+                image: item.image?.imageUrl,
+                itemWebUrl: item.itemWebUrl,
+              }}
+            />
             <button className="px-6 py-3 border border-white/20 hover:border-orange-500/50 rounded-lg font-semibold transition-colors hover:text-orange-400">
               Save
             </button>

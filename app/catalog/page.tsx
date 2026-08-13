@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SlidersHorizontal } from "lucide-react";
 import { searchEbayItems } from "@/lib/ebay";
+import AddToCart from "@/components/AddToCart";
 
 const CATEGORIES = [
   { label: "All Parts", value: "" },
@@ -191,12 +192,17 @@ export default async function CatalogPage({ searchParams }: Props) {
                           ${parseFloat(item.price.value).toFixed(2)}
                         </p>
                         <div className="flex gap-1">
-                          <button className="text-xs border border-gray-300 hover:border-red-500 text-gray-700 hover:text-red-600 px-2 py-1 rounded transition-colors">
-                            Choose
-                          </button>
-                          <button className="text-xs bg-gray-900 hover:bg-red-600 text-white px-2 py-1 rounded transition-colors">
-                            Add
-                          </button>
+                          <AddToCart
+                            className="text-xs bg-gray-900 hover:bg-red-600 text-white px-3 py-1 rounded transition-colors"
+                            product={{
+                              itemId: item.itemId,
+                              title: item.title,
+                              price: parseFloat(item.price.value),
+                              currency: item.price.currency,
+                              image: item.image?.imageUrl,
+                              itemWebUrl: item.itemWebUrl,
+                            }}
+                          />
                         </div>
                       </div>
                     </div>
