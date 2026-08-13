@@ -33,3 +33,22 @@ body {
 /* Hide scrollbar for mobile category pills */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Subtle textured backgrounds so sections aren't flat/bland */
+.bg-soft {
+  background-color: #f6f7f9;
+  background-image:
+    radial-gradient(circle at 0 0, rgba(204, 17, 17, 0.05), transparent 32%),
+    radial-gradient(circle at 100% 100%, rgba(17, 17, 17, 0.04), transparent 32%);
+}
+.bg-grid {
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.04) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
+
+/* Gentle hover lift for cards */
+.card-lift { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+.card-lift:hover { transform: translateY(-4px); }

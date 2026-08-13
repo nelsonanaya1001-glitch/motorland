@@ -41,6 +41,7 @@ export default function Navbar() {
             <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-700">
               <Link href="/" className="hover:text-red-600 transition-colors">Home</Link>
               <Link href="/catalog" className="hover:text-red-600 transition-colors">Catalog</Link>
+              <Link href="/about" className="hover:text-red-600 transition-colors">About Us</Link>
               <Link href="/contact" className="hover:text-red-600 transition-colors">Contact</Link>
             </div>
 
@@ -90,6 +91,7 @@ export default function Navbar() {
             <div className="md:hidden pb-4 flex flex-col gap-4 text-sm font-semibold text-gray-700 border-t border-gray-100 pt-4">
               <Link href="/" onClick={() => setMenuOpen(false)} className="hover:text-red-600 transition-colors">Home</Link>
               <Link href="/catalog" onClick={() => setMenuOpen(false)} className="hover:text-red-600 transition-colors">Catalog</Link>
+              <Link href="/about" onClick={() => setMenuOpen(false)} className="hover:text-red-600 transition-colors">About Us</Link>
               <Link href="/contact" onClick={() => setMenuOpen(false)} className="hover:text-red-600 transition-colors">Contact</Link>
             </div>
           )}

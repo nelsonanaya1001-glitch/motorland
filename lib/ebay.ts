@@ -100,7 +100,7 @@ function getMockItems(
       title: `${brand} ${cat} Part #ML${String(i + 1).padStart(4, "0")} — OEM Quality Replacement`,
       price: { value: price, currency: "USD" },
       image: {
-        imageUrl: `https://placehold.co/400x400/1a1a1a/f97316?text=${encodeURIComponent(brand)}`,
+        imageUrl: `https://placehold.co/600x600/f3f4f6/6b7280?text=${encodeURIComponent(brand)}`,
       },
       condition: conditions[i % conditions.length],
       itemWebUrl: `#`,
