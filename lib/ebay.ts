@@ -47,6 +47,11 @@ export async function searchEbayItems(
     });
     if (category) params.set("category_ids", category);
 
+    // Restrict results to your own eBay store so the site shows YOUR
+    // inventory. Set EBAY_SELLER in your env (defaults to your store id).
+    const seller = process.env.EBAY_SELLER ?? "motorlandmiami";
+    if (seller) params.set("filter", `sellers:{${seller}}`);
+
     const res = await fetch(
       `https://api.ebay.com/buy/browse/v1/item_summary/search?${params}`,
       {
