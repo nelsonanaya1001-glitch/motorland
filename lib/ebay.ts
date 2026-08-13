@@ -1,6 +1,14 @@
-// eBay Browse API integration
-// Docs: https://developer.ebay.com/api-docs/buy/browse/overview.html
-// Set EBAY_APP_ID in your .env.local to enable live data
+// Product data for Motorland Miami.
+//
+// Primary source: your eBay "all active listings" report, parsed into
+// lib/inventory.json by scripts/build-inventory.mjs. To refresh inventory,
+// download a new report to data/ebay-listings.csv and run:
+//   node scripts/build-inventory.mjs
+//
+// If EBAY_APP_ID / EBAY_CERT_ID are set, the live eBay Browse API is used
+// instead (auto-updating). Otherwise the CSV snapshot is served.
+
+import inventory from "./inventory.json";
 
 export interface EbayItem {
   itemId: string;
@@ -10,6 +18,93 @@ export interface EbayItem {
   condition?: string;
   itemWebUrl: string;
   categories?: { categoryName: string }[];
+}
+
+interface Listing {
+  id: string;
+  title: string;
+  price: number;
+  currency: string;
+  category: string;
+  condition: string;
+}
+
+const LISTINGS = inventory as Listing[];
+
+// Map the site's category slugs to keyword matchers run against each
+// listing's eBay category name + title.
+const CATEGORY_MATCHERS: Record<string, RegExp> = {
+  wiring: /wir(e|ing)|harness/i,
+  mirrors: /mirror/i,
+  headlights: /head\s?(light|lamp)/i,
+  "door-handles": /door handle|handle/i,
+  bumpers: /bumper/i,
+  grilles: /grille|grill\b/i,
+  radio: /radio|stereo|head unit|audio|receiver/i,
+  engine: /engine|valve cover|intake manifold|ignition coil|throttle|camshaft|crankshaft|piston|cylinder head|oil pan|timing/i,
+  suspension: /suspension|control arm|strut|shock|coil spring|leaf|stabilizer|sway|knuckle|ball joint|axle/i,
+  brakes: /brake|caliper|master cylinder|rotor|\babs\b|booster/i,
+  electrical: /ecu|module|sensor|fuse|relay|wir(e|ing)|alternator|starter|antenna|switch|speaker/i,
+  interior: /console|dash|seat|trim|glove|visor|panel|carpet|headrest|sun ?visor/i,
+  "wheels-tires": /wheel|tire|\bhub\b|rim|tpms/i,
+};
+
+function toEbayItem(l: Listing): EbayItem {
+  return {
+    itemId: l.id,
+    title: l.title,
+    price: { value: l.price.toFixed(2), currency: l.currency || "USD" },
+    condition: l.condition || undefined,
+    itemWebUrl: `https://www.ebay.com/itm/${l.id}`,
+    categories: l.category ? [{ categoryName: l.category }] : undefined,
+  };
+}
+
+function filterListings(query: string, category?: string): Listing[] {
+  let list = LISTINGS;
+
+  if (category) {
+    const matcher = CATEGORY_MATCHERS[category];
+    if (matcher) {
+      list = list.filter((l) => matcher.test(`${l.category} ${l.title}`));
+    }
+  }
+
+  // "auto parts" is the app's default = show everything.
+  const q = (query || "").trim().toLowerCase();
+  if (q && q !== "auto parts") {
+    const terms = q.split(/\s+/);
+    list = list.filter((l) => {
+      const hay = `${l.title} ${l.category}`.toLowerCase();
+      return terms.every((t) => hay.includes(t));
+    });
+  }
+
+  return list;
+}
+
+async function searchViaApi(
+  query: string,
+  category: string | undefined,
+  limit: number,
+  offset: number
+): Promise<{ items: EbayItem[]; total: number }> {
+  const token = await getEbayToken();
+  const params = new URLSearchParams({
+    q: query || "auto parts",
+    limit: String(limit),
+    offset: String(offset),
+  });
+  if (category) params.set("category_ids", category);
+  const seller = process.env.EBAY_SELLER ?? "motorlandmiami";
+  if (seller) params.set("filter", `sellers:{${seller}}`);
+
+  const res = await fetch(
+    `https://api.ebay.com/buy/browse/v1/item_summary/search?${params}`,
+    { headers: { Authorization: `Bearer ${token}` }, next: { revalidate: 300 } }
+  );
+  const data = await res.json();
+  return { items: data.itemSummaries ?? [], total: data.total ?? 0 };
 }
 
 async function getEbayToken(): Promise<string> {
@@ -34,87 +129,35 @@ export async function searchEbayItems(
   limit = 24,
   offset = 0
 ): Promise<{ items: EbayItem[]; total: number }> {
-  if (!process.env.EBAY_APP_ID) {
-    return getMockItems(query, category, limit, offset);
+  if (process.env.EBAY_APP_ID) {
+    try {
+      return await searchViaApi(query, category, limit, offset);
+    } catch {
+      // fall through to the CSV snapshot
+    }
   }
 
-  try {
-    const token = await getEbayToken();
-    const params = new URLSearchParams({
-      q: query || "auto parts",
-      limit: String(limit),
-      offset: String(offset),
-    });
-    if (category) params.set("category_ids", category);
-
-    // Restrict results to your own eBay store so the site shows YOUR
-    // inventory. Set EBAY_SELLER in your env (defaults to your store id).
-    const seller = process.env.EBAY_SELLER ?? "motorlandmiami";
-    if (seller) params.set("filter", `sellers:{${seller}}`);
-
-    const res = await fetch(
-      `https://api.ebay.com/buy/browse/v1/item_summary/search?${params}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        next: { revalidate: 300 },
-      }
-    );
-    const data = await res.json();
-    return {
-      items: data.itemSummaries ?? [],
-      total: data.total ?? 0,
-    };
-  } catch {
-    return getMockItems(query, category, limit, offset);
-  }
+  const filtered = filterListings(query, category);
+  return {
+    items: filtered.slice(offset, offset + limit).map(toEbayItem),
+    total: filtered.length,
+  };
 }
 
 export async function getEbayItem(itemId: string): Promise<EbayItem | null> {
-  if (!process.env.EBAY_APP_ID) {
-    return getMockItems("", undefined, 1, 0).items[0] ?? null;
+  if (process.env.EBAY_APP_ID) {
+    try {
+      const token = await getEbayToken();
+      const res = await fetch(`https://api.ebay.com/buy/browse/v1/item/${itemId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        next: { revalidate: 300 },
+      });
+      if (res.ok) return await res.json();
+    } catch {
+      // fall through to the CSV snapshot
+    }
   }
-  try {
-    const token = await getEbayToken();
-    const res = await fetch(`https://api.ebay.com/buy/browse/v1/item/${itemId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-      next: { revalidate: 300 },
-    });
-    return await res.json();
-  } catch {
-    return null;
-  }
-}
 
-// Mock data used when EBAY_APP_ID is not configured
-function getMockItems(
-  _query: string,
-  category: string | undefined,
-  limit: number,
-  offset: number
-): { items: EbayItem[]; total: number } {
-  const categories = ["Engine Parts", "Brakes", "Suspension", "Electrical", "Exterior", "Wheels & Tires"];
-  const brands = ["Bosch", "ACDelco", "Dorman", "Moog", "Monroe", "Gates", "NGK", "Denso"];
-  const conditions = ["New", "New other", "Manufacturer refurbished"];
-
-  const all: EbayItem[] = Array.from({ length: 200 }, (_, i) => {
-    const cat = category ?? categories[i % categories.length];
-    const brand = brands[i % brands.length];
-    const price = (9.99 + i * 3.5).toFixed(2);
-    return {
-      itemId: `mock-${i + 1}`,
-      title: `${brand} ${cat} Part #ML${String(i + 1).padStart(4, "0")} — OEM Quality Replacement`,
-      price: { value: price, currency: "USD" },
-      image: {
-        imageUrl: `https://placehold.co/600x600/f3f4f6/6b7280?text=${encodeURIComponent(brand)}`,
-      },
-      condition: conditions[i % conditions.length],
-      itemWebUrl: `#`,
-      categories: [{ categoryName: cat }],
-    };
-  });
-
-  return {
-    items: all.slice(offset, offset + limit),
-    total: all.length,
-  };
+  const found = LISTINGS.find((l) => l.id === itemId);
+  return found ? toEbayItem(found) : null;
 }
